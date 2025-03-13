@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2d2d2d;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 400px;
+        }
+
+        .display {
+            width: 100%;
+            height: 60px;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: right;
+            padding: 10px;
+            border: 2px solid #444;
+            border-radius: 10px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            background-color: #444;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        button:active {
+            background-color: #666;
+        }
+
+        .button-function { background-color: #6a4caf; }
+        .button-clear { background-color: #f44336; }
+        .button-special { background-color: #2196F3; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" class="display" disabled>
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="button-clear">C</button>
+            <button onclick="deleteLast()">⌫</button>
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button onclick="appendToDisplay('/')">÷</button>
+
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('*')">×</button>
+            <button class="button-special" onclick="sqrt()">√</button>
+
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('-')">−</button>
+            <button class="button-special" onclick="pow()">x²</button>
+
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button class="button-special" onclick="log()">log</button>
+
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="negate()">+/-</button>
+            <button class="button-special" onclick="exp()">e^x</button>
+        </div>
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function calculateResult() {
+            try {
+                let expression = document.getElementById('display').value;
+                document.getElementById('display').value = eval(expression);
+            } catch (e) {
+                document.getElementById('display').value = "Error";
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function deleteLast() {
+            let currentValue = document.getElementById('display').value;
+            document.getElementById('display').value = currentValue.slice(0, -1);
+        }
+
+        function sqrt() {
+            let value = document.getElementById('display').value;
+            document.getElementById('display').value = Math.sqrt(value);
+        }
+
+        function log() {
+            let value = document.getElementById('display').value;
+            document.getElementById('display').value = Math.log10(value);
+        }
+
+        function pow() {
+            let value = document.getElementById('display').value;
+            document.getElementById('display').value = Math.pow(value, 2);
+        }
+
+        function exp() {
+            let value = document.getElementById('display').value;
+            document.getElementById('display').value = Math.exp(value);
+        }
+
+        function negate() {
+            let value = document.getElementById('display').value;
+            if (value) {
+                document.getElementById('display').value = value.startsWith('-') ? value.slice(1) : '-' + value;
+            }
+        }
+    </script>
+</body>
+</html>
